@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Menu from '../../components/Menu/Menu';
+import LocationAction from '../../components/LocationAction/LocationAction';
 import ImageShow from '../../components/ImageShow/ImageShow';
 import ReviewList from '../../components/Reviews/ReviewList';
 import images from './images';
@@ -33,7 +33,7 @@ const location = () => {
     <div>
       <LocationWrapper>
         <ImageShow data={images} />
-        <Menu grid="2fr" />
+        <LocationAction />
         <MapWithMarkers dataMarkers={myLocation} lat={myLocation[0].lat} lng={myLocation[0].lng} defaultZoom={7} />
         <ReviewsWrapper>
           <ReviewList data={reviews} />
