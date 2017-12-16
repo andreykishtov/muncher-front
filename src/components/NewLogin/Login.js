@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import 'antd/lib/form/style/css';
 
 const LoginWrapper = styled.div`
 max-width: 500px;
@@ -67,6 +69,17 @@ class LoginForm extends Component {
     );
   }
 }
+LoginForm.propTypes = {
+
+  form: PropTypes.arrayOf(PropTypes.shape({
+    getFieldDecorator: PropTypes.arrayOf(PropTypes.shape({
+      userName: PropTypes.string,
+      password: PropTypes.string,
+      remember: PropTypes.bool
+    }).isRequired),
+    validateFields: PropTypes.func
+  }).isRequired).isRequired
+};
 
 const WrappedLoginForm = Form.create()(LoginForm);
 
