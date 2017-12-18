@@ -3,10 +3,12 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import 'antd/lib/form/style/css';
+import 'antd/lib/checkbox/style/css';
 
 const LoginWrapper = styled.div`
 max-width: 500px;
-margin: auto;
+margin: 5em auto;
+
 .login-form-forgot {
   float: right;
 }
@@ -14,7 +16,7 @@ margin: auto;
   width: 100%;
 }
 .ant-row {
-  padding: 10px 0 0 0 ;
+  padding: 0 0 0 0 ;
 }
 `;
 
