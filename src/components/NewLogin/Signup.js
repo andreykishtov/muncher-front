@@ -22,7 +22,7 @@ margin: 5em auto;
 `;
 
 const FormItem = Form.Item;
-const  Option  = Select.Option;
+const Option = Select.Option;
 const { AutoCompleteOption } = AutoComplete.Option;
 
 const residences = [{
@@ -104,7 +104,7 @@ class SignupForm extends Component {
     })(<Select style={{ width: 70 }}>
       <Option value="86">+86</Option>
       <Option value="87">+87</Option>
-       </Select>);
+    </Select>);
 
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
@@ -118,9 +118,9 @@ class SignupForm extends Component {
        >
             {getFieldDecorator('email', {
            rules: [{
-             type: 'email', message: 'The input is not valid E-mail!',
+             type: 'email', message: 'The input is not valid E-mail!'
            }, {
-             required: true, message: 'Please input your E-mail!',
+             required: true, message: 'Please input your E-mail!'
            }]
          })(<Input />)}
           </FormItem>
@@ -130,7 +130,7 @@ class SignupForm extends Component {
        >
             {getFieldDecorator('password', {
            rules: [{
-             required: true, message: 'Please input your password!',
+             required: true, message: 'Please input your password!'
            }, {
              validator: this.checkConfirm
            }]
@@ -191,7 +191,7 @@ class SignupForm extends Component {
              onChange={this.handleWebsiteChange}
              placeholder="website">
              <Input />
-             </AutoComplete>)}
+           </AutoComplete>)}
           </FormItem>
           <FormItem
             {...formItemLayout}
@@ -201,7 +201,7 @@ class SignupForm extends Component {
             <Row gutter={8}>
               <Col span={12}>
                 {getFieldDecorator('captcha', {
-               rules: [{ required: true, message: 'Please input the captcha you got!' }],
+               rules: [{ required: true, message: 'Please input the captcha you got!' }]
              })(<Input />)}
               </Col>
               <Col span={12}>
@@ -211,7 +211,7 @@ class SignupForm extends Component {
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             {getFieldDecorator('agreement', {
-           valuePropName: 'checked',
+           valuePropName: 'checked'
          })(<Checkbox>I have read the <a href="">agreement</a></Checkbox>)}
           </FormItem>
           <FormItem {...tailFormItemLayout}>
