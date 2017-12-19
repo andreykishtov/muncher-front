@@ -1,25 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import 'antd/lib/form/style/css';
 import 'antd/lib/checkbox/style/css';
 import 'antd/lib/cascader/style/css';
-
-const LoginWrapper = styled.div`
-max-width: 500px;
-margin: 5em auto;
-
-.login-form-forgot {
-  float: right;
-}
-.login-form-button {
-  width: 100%;
-}
-.ant-row {
-  padding: 0 0 0 0 ;
-}
-`;
+import LoginWrapper from './Login.style';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

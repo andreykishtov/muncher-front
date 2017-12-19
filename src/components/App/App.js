@@ -4,8 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { injectGlobal } from 'styled-components';
 import WrappedLoginForm from '../../components/NewLogin/Login';
 import WrappedSignupForm from '../../components/NewLogin/Signup';
-
-// import SignupPage from '../../components/SignupPage/SignupPage';
 import HomePage from '../../pages/HomePage/HomePage';
 import Location from '../../pages/Location/Location';
 import DashBoardPage from '../../containers/DashBoardPage';
@@ -27,7 +25,6 @@ const App = () => (
           <Route exact path="/" component={HomePage} />
           <Route path="/login" component={WrappedLoginForm} />
           <Route path="/signup" component={WrappedSignupForm} />
-
           {/* <Route path="/signup" component={SignupPage} /> */}
           <Route path="/location" component={Location} />
           <Route exact path="/dashboard" component={DashBoardPage} />

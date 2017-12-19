@@ -1,24 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import 'antd/lib/form/style/css';
 import 'antd/lib/checkbox/style/css';
+import LoginWrapper from './Login.style';
 
-const LoginWrapper = styled.div`
-max-width: 500px;
-margin: 5em auto;
-
-.login-form-forgot {
-  float: right;
-}
-.login-form-button {
-  width: 100%;
-}
-.ant-row {
-  padding: 0 0 0 0 ;
-}
-`;
 
 const FormItem = Form.Item;
 
