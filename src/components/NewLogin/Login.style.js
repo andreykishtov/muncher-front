@@ -10,9 +10,6 @@ const LoginWrapper = styled.div`
 .login-form-button {
   width: 100%;
 }
-.ant-row {
-  padding: 0 0 0 0 ;
-}
 `;
 
 export default LoginWrapper;

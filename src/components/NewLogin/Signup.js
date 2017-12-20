@@ -8,7 +8,7 @@ import LoginWrapper from './Login.style';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const { AutoCompleteOption } = AutoComplete.Option;
+const AutoCompleteOption = AutoComplete.Option;
 
 const residences = [{
   value: 'Tel-aviv',
@@ -32,11 +32,11 @@ class SignupForm extends Component {
     });
   }
   handleConfirmBlur = (e) => {
-    const { value } = e.target.value;
+    const value = e.target.value;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   }
   checkPassword = (rule, value, callback) => {
-    const { form } = this.props.form;
+    const form  = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
