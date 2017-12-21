@@ -26,37 +26,26 @@ class SignupForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
+    !err ? console.log('Received values of form: ', values):true;
     });
   }
   handleConfirmBlur = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   }
   checkPassword = (rule, value, callback) => {
-    const { form } = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
+    const { form } = this.props;
+    const message = 'Two passwords that you enter is inconsistent!';
+    value && value !== form.getFieldValue('password') ? callback(message) : callback();    
   }
   handleWebsiteChange = (value) => {
     let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
+    !value ? autoCompleteResult = [] : autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);  
     this.setState({ autoCompleteResult });
   }
   checkConfirm = (rule, value, callback) => {
-    const { form } = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
+    const { form } = this.props;
+    value && this.state.confirmDirty ? form.validateFields(['confirm'], { force: true }):false;
     callback();
   }
   render() {
