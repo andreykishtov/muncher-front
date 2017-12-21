@@ -5,9 +5,7 @@ import 'antd/lib/form/style/css';
 import 'antd/lib/checkbox/style/css';
 import LoginWrapper from './Login.style';
 
-
 const FormItem = Form.Item;
-
 class LoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
