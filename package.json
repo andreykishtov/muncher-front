@@ -6,6 +6,7 @@
     "antd": "^3.0.1",
     "axios": "^0.17.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "fa": "^1.0.1",
     "geolib": "^2.0.24",
     "google-map-react": "^0.25.0",
     "lodash": "^4.17.4",
