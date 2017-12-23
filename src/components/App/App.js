@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { injectGlobal } from 'styled-components';
 import WrappedLoginForm from '../../components/NewLogin/Login';
@@ -18,19 +20,21 @@ export const global = injectGlobal`
 
 const App = () => (
   <Router>
-    <MuiThemeProvider>
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/login" component={WrappedLoginForm} />
-          <Route path="/signup" component={WrappedSignupForm} />
-          <Route path="/location" component={Location} />
-          <Route exact path="/dashboard" component={DashBoardPage} />
-          <Route component={() => <h1>Oops.. page not found</h1>} />
-        </Switch>
-      </div>
-    </MuiThemeProvider>
+    <LocaleProvider locale={enUS}>
+      <MuiThemeProvider>
+        <div>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/login" component={WrappedLoginForm} />
+            <Route path="/signup" component={WrappedSignupForm} />
+            <Route path="/location" component={Location} />
+            <Route exact path="/dashboard" component={DashBoardPage} />
+            <Route component={() => <h1>Oops.. page not found</h1>} />
+          </Switch>
+        </div>
+      </MuiThemeProvider>
+    </LocaleProvider>
   </Router>
 );
 export default App;

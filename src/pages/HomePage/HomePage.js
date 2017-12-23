@@ -1,23 +1,32 @@
+import { Card } from 'antd';
 import React, { Component } from 'react';
 import GridCards from '../../components/GridCards/GridCards';
 import { Main, Search, Left, Right, BottomLeft } from './HomePage.styles';
+import LocationCard from '../../components/LocationCard/LocationCard';
 import data from './data';
 import MapWithMarkers from '../../components/Maps/MapWithMarkers';
 import Filter from '../../components/Filter/filter';
 import FeaturedCard from '../../components/FeaturedCard/FeaturedCard';
 import CallToActionDialog from '../../components/CallToActionDialog/CallToActionDialog';
 
+const itemsPerPage = 6;
+
 class HomePage extends Component {
   state = {
     cards: data.cards,
     filteredCards: data.cards,
+    paginationData: [],
+    dataMarkers: [],
     toggleCTADialog: false,
+    paginationSection: [],
+    pageNum: 1,
     selectedRest: {},
     special: {}
   };
 
   componentWillMount = () => {
     const special = this.getRandomCard();
+    this.updatePaginationCards(data.cards);
     this.setState({ special });
   };
 
@@ -27,17 +36,53 @@ class HomePage extends Component {
   };
 
   onCardClick = (id, borderType = '#EAE8F2') => {
-    const { filteredCards } = this.state;
-    const selectedCard = filteredCards.map(card =>
+    const { dataMarkers } = this.state;
+    const selectedCard = dataMarkers.map(card =>
       (card.id === id
         ? { ...card, selected: borderType, showInfo: !card.showInfo }
         : { ...card, showInfo: false, selected: null }));
-    this.setState({ filteredCards: selectedCard });
+    this.setState({ dataMarkers: selectedCard });
   };
 
   getRandomCard() {
     return this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
   }
+
+
+  updatePagination = (pageNumber, paginationData1, filteredCards1) => {
+    let { filteredCards, paginationData, pageNum } = this.state;
+    pageNum = pageNumber || pageNum;
+    paginationData = typeof paginationData1 === 'number' ? paginationData : paginationData1;
+    filteredCards = filteredCards1 || filteredCards;
+    const startIndex = (pageNum - 1) * itemsPerPage;
+    const paginationSection = paginationData.slice(startIndex, startIndex + itemsPerPage);
+    const dataMarkers = filteredCards.slice(startIndex, startIndex + itemsPerPage);
+    if (filteredCards1) {
+      pageNum = 1;
+    }
+    this.setState({ paginationData, paginationSection, dataMarkers, pageNum });
+  };
+
+
+  updatePaginationCards = filteredCards => {
+    const paginationData = filteredCards.map(tile => (
+      <Card.Grid
+        key={tile.title}
+        style={{ width: '30%', textAlign: 'center', padding: '0px', margin: '0 5px 10px 5px' }}
+      >
+        <LocationCard
+          id={tile.id}
+          key={tile.title}
+          {...tile}
+          toggleCTADialog={this.toggleCTADialog}
+          redirectToLocation={this.redirectToLocation}
+          onCardClick={this.onCardClick}
+        />
+      </Card.Grid>
+    ));
+
+    this.updatePagination(undefined, paginationData, filteredCards);
+  };
 
   redirectToLocation = (history, id) => {
     history.push(`/location/${id}`);
@@ -69,20 +114,32 @@ class HomePage extends Component {
   };
 
   render() {
-    const { special, filteredCards, cards } = this.state;
+    const {
+      special,
+      filteredCards,
+      cards,
+      dataMarkers,
+      pageNum,
+      paginationSection
+    } = this.state;
 
     return (
       <div>
         <Main>
           <Search gridArea="search">
-            <Filter cards={cards} updateFilterCards={this.updateFilterCards} />
+            <Filter
+              cards={cards}
+              updateFilterCards={this.updateFilterCards}
+              updatePaginationCards={this.updatePaginationCards}
+            />
           </Search>
           <Right gridArea="right">
             <GridCards
+              pageSize={itemsPerPage}
               filteredCards={filteredCards}
-              toggleCTADialog={this.toggleCTADialog}
-              redirectToLocation={this.redirectToLocation}
-              onCardClick={this.onCardClick}
+              paginationSection={paginationSection}
+              pageNum={pageNum}
+              updatePagination={this.updatePagination}
             />
             <CallToActionDialog
               selectedRest={this.state.selectedRest}
@@ -93,7 +150,7 @@ class HomePage extends Component {
           <Left gridArea="left">
             <MapWithMarkers
               onMarkerClick={this.onMarkerClick}
-              dataMarkers={filteredCards}
+              dataMarkers={dataMarkers}
               lat={34}
               lng={32}
               defaultZoom={4}
@@ -102,7 +159,7 @@ class HomePage extends Component {
           <BottomLeft gridArea="bottomLeft">
             <FeaturedCard
               special={special}
-              cards={cards}
+              cards={dataMarkers}
               redirectToLocation={this.redirectToLocation}
               toggleCTADialog={this.toggleCTADialog}
               onCardClick={this.onMarkerClick}
