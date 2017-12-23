@@ -7,47 +7,53 @@ import 'antd/lib/cascader/style/css';
 import LoginWrapper from './Login.style';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
+const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
-const residences = [{
-  value: 'Tel-aviv',
-  label: 'Tel-aviv'
-},
-{
-  value: 'Haifa',
-  label: 'Haifa'
-}];
+const residences = [
+  {
+    value: 'Tel-aviv',
+    label: 'Tel-aviv'
+  },
+  {
+    value: 'Haifa',
+    label: 'Haifa'
+  }
+];
 class SignupForm extends Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: []
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-    !err ? console.log('Received values of form: ', values):true;
-    });
-  }
-  handleConfirmBlur = (e) => {
+    this.props.form.validateFieldsAndScroll((err, values) => (!err ? new Error('Received values of form: ', values) : true));
+  };
+  handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  }
+  };
   checkPassword = (rule, value, callback) => {
     const { form } = this.props;
     const message = 'Two passwords that you enter is inconsistent!';
-    value && value !== form.getFieldValue('password') ? callback(message) : callback();    
-  }
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    !value ? autoCompleteResult = [] : autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);  
+    return value && value !== form.getFieldValue('password') ? callback(message) : callback();
+  };
+  handleWebsiteChange = (value = []) => {
+    if (!value.length) {
+      return;
+    }
+    const autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
     this.setState({ autoCompleteResult });
-  }
+  };
   checkConfirm = (rule, value, callback) => {
     const { form } = this.props;
-    value && this.state.confirmDirty ? form.validateFields(['confirm'], { force: true }):false;
+
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+
     callback();
-  }
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
@@ -80,103 +86,89 @@ class SignupForm extends Component {
       <Option value="87">+87</Option>
     </Select>);
 
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
+    const websiteOptions = autoCompleteResult.map(website => <AutoCompleteOption key={website}>{website}</AutoCompleteOption>);
     return (
       <LoginWrapper>
         <Form onSubmit={this.handleSubmit}>
-          <FormItem
-            {...formItemLayout}
-            label="E-mail"
-       >
+          <FormItem {...formItemLayout} label="E-mail">
             {getFieldDecorator('email', {
-           rules: [{
-             type: 'email', message: 'The input is not valid E-mail!'
-           }, {
-             required: true, message: 'Please input your E-mail!'
-           }]
-         })(<Input />)}
+              rules: [
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!'
+                },
+                {
+                  required: true,
+                  message: 'Please input your E-mail!'
+                }
+              ]
+            })(<Input />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Password"
-       >
+          <FormItem {...formItemLayout} label="Password">
             {getFieldDecorator('password', {
-           rules: [{
-             required: true, message: 'Please input your password!'
-           }, {
-             validator: this.checkConfirm
-           }]
-         })(<Input type="password" />)}
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password!'
+                },
+                {
+                  validator: this.checkConfirm
+                }
+              ]
+            })(<Input type="password" />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Confirm Password"
-       >
+          <FormItem {...formItemLayout} label="Confirm Password">
             {getFieldDecorator('confirm', {
-            rules: [{
-             required: true, message: 'Please confirm your password!'
-           }, {
-             validator: this.checkPassword
-           }]
-         })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
+              rules: [
+                {
+                  required: true,
+                  message: 'Please confirm your password!'
+                },
+                {
+                  validator: this.checkPassword
+                }
+              ]
+            })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={(
+            label={
               <span>
-             Nickname&nbsp;
-             <Tooltip title="What do you want others to call you?">
-               <Icon type="question-circle-o" />
-             </Tooltip>
+                Nickname&nbsp;
+                <Tooltip title="What do you want others to call you?">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
               </span>
-         )}
-       >
+            }
+          >
             {getFieldDecorator('nickname', {
-           rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }]
-         })(<Input />)}
+              rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }]
+            })(<Input />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Habitual Residence"
-       >
+          <FormItem {...formItemLayout} label="Habitual Residence">
             {getFieldDecorator('residence', {
-           initialValue: ['zhejiang', 'hangzhou', 'xihu'],
-           rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!' }]
-         })(<Cascader options={residences} />)}
+              initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+              rules: [{ type: 'array', required: true, message: 'Please select your habitual residence!' }]
+            })(<Cascader options={residences} />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Phone Number"
-       >
+          <FormItem {...formItemLayout} label="Phone Number">
             {getFieldDecorator('phone', {
-           rules: [{ required: true, message: 'Please input your phone number!' }]
-         })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+              rules: [{ required: true, message: 'Please input your phone number!' }]
+            })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Website"
-       >
+          <FormItem {...formItemLayout} label="Website">
             {getFieldDecorator('website', {
-           rules: [{ required: true, message: 'Please input website!' }]
-           })(<AutoComplete
-             dataSource={websiteOptions}
-             onChange={this.handleWebsiteChange}
-             placeholder="website">
-             <Input />
-           </AutoComplete>)}
+              rules: [{ required: true, message: 'Please input website!' }]
+            })(<AutoComplete dataSource={websiteOptions} onChange={this.handleWebsiteChange} placeholder="website">
+              <Input />
+            </AutoComplete>)}
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label="Captcha"
-            extra="We must make sure that your are a human."
-       >
+          <FormItem {...formItemLayout} label="Captcha" extra="We must make sure that your are a human.">
             <Row gutter={8}>
               <Col span={12}>
                 {getFieldDecorator('captcha', {
-               rules: [{ required: true, message: 'Please input the captcha you got!' }]
-             })(<Input />)}
+                  rules: [{ required: true, message: 'Please input the captcha you got!' }]
+                })(<Input />)}
               </Col>
               <Col span={12}>
                 <Button>Get captcha</Button>
@@ -185,19 +177,22 @@ class SignupForm extends Component {
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             {getFieldDecorator('agreement', {
-           valuePropName: 'checked'
-         })(<Checkbox>I have read the <a href="">agreement</a></Checkbox>)}
+              valuePropName: 'checked'
+            })(<Checkbox>
+                I have read the <a href="">agreement</a>
+            </Checkbox>)}
           </FormItem>
           <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">Register</Button>
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
           </FormItem>
         </Form>
-      </LoginWrapper >
+      </LoginWrapper>
     );
   }
 }
 SignupForm.propTypes = {
-
   form: PropTypes.objectOf(PropTypes.shape({
     getFieldsValue: PropTypes.func,
     getFieldDecorator: PropTypes.arrayOf(PropTypes.shape({

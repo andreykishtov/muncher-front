@@ -32,6 +32,7 @@ const GridCards = ({ pageSize, filteredCards, paginationSection, pageNum, update
 GridCards.propTypes = {
   pageNum: PropTypes.number,
   updatePagination: PropTypes.func,
+  paginationSection: PropTypes.string.isRequired,
   pageSize: PropTypes.number,
   filteredCards: PropTypes.arrayOf(PropTypes.shape({
     image: PropTypes.string,

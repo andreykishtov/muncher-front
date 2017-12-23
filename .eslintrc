@@ -19,6 +19,7 @@
     "class-property"
   ],
   "rules": {
+    "react/jsx-closing-tag-location":"off",
     "max-len":0,
     "linebreak-style": 0,
     "quotes": [
