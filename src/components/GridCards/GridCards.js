@@ -1,37 +1,39 @@
 import 'antd/lib/card/style/css';
+import 'antd/lib/pagination/style/css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
-import LocationCard from '../LocationCard/LocationCard';
+import { Card, Pagination } from 'antd';
+import { CardsContainer, CardsPagination } from './GridCards.styled';
 
-const GridCards = ({ filteredCards, toggleCTADialog, redirectToLocation, onCardClick }) => (
+const GridCards = ({ pageSize, filteredCards, paginationSection, pageNum, updatePagination }) => (
   <Card
     id="cardWrapper"
-    style={{ scrollBehavior: 'smooth', height: 'calc(100vh - 112px)', overflowY: 'scroll' }}
+    style={{
+      scrollBehavior: 'smooth',
+      height: 'calc(100vh - 112px)',
+      overflowY: 'scroll'
+    }}
     bordered={false}
+    noHovering
   >
-    {filteredCards.map(tile => (
-      <Card.Grid
-        key={tile.title}
-        style={{ width: '30%', textAlign: 'center', padding: '0px', margin: '0 5px 10px 5px' }}
-      >
-        <LocationCard
-          id={tile.id}
-          key={tile.title}
-          {...tile}
-          toggleCTADialog={toggleCTADialog}
-          redirectToLocation={redirectToLocation}
-          onCardClick={onCardClick}
-        />
-      </Card.Grid>
-    ))}
+    <CardsPagination>
+      <CardsContainer>{paginationSection}</CardsContainer>
+      <Pagination
+        defaultCurrent={1}
+        current={pageNum}
+        pageSize={pageSize}
+        total={filteredCards.length}
+        onChange={updatePagination}
+      />
+    </CardsPagination>
   </Card>
 );
 
 GridCards.propTypes = {
-  toggleCTADialog: PropTypes.func,
-  redirectToLocation: PropTypes.func,
-  onCardClick: PropTypes.func,
+  pageNum: PropTypes.number,
+  updatePagination: PropTypes.func,
+  // paginationData: PropTypes.arrayOf(PropTypes.shape({}))
+  pageSize: PropTypes.number,
   filteredCards: PropTypes.arrayOf(PropTypes.shape({
     image: PropTypes.string,
     title: PropTypes.string,
@@ -45,9 +47,9 @@ GridCards.propTypes = {
 };
 
 GridCards.defaultProps = {
-  toggleCTADialog: () => null,
-  redirectToLocation: () => null,
-  onCardClick: () => null
+  pageSize: () => null,
+  pageNum: () => 1,
+  updatePagination: () => null
 };
 
 export default GridCards;

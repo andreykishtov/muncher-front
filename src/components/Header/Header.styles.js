@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const HeaderStyle = styled.header`
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
 
   @media (min-width: 1025px) {
@@ -14,7 +14,7 @@ export const HeaderStyle = styled.header`
 export const Title = styled.h1`
   color: #cb0067;
   margin-top: 5px;
-  margin-bottom:0;
+  margin-bottom: 0;
 `;
 
 export const NavItem = styled.li`

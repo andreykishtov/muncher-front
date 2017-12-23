@@ -62,7 +62,11 @@ class Filter extends Component {
     const { cards } = this.props;
     const cities = cards.map(card => card.city);
     const cordsNoDup = cities.filter((city, pos) => cities.indexOf(city) === pos);
-    return cordsNoDup.map(city => <Option key={city} value={city}> {city} </Option>);
+    return cordsNoDup.map(city => (
+      <Option key={city} value={city}>
+        {city}
+      </Option>
+    ));
   }
 
   checkFarthestPoint(myPosition) {
@@ -92,12 +96,14 @@ class Filter extends Component {
     });
 
     this.props.updateFilterCards(filteredList);
+    this.props.updatePaginationCards(filteredList);
   };
 
   clearFilter = () => {
     const { cards } = this.props;
     this.setState({ orderType: undefined, city: undefined, distance: undefined });
     this.props.updateFilterCards(cards);
+    this.props.updatePaginationCards(cards);
   };
 
   render() {
@@ -173,7 +179,8 @@ Filter.propTypes = {
     lng: PropTypes.number,
     lat: PropTypes.number
   })).isRequired,
-  updateFilterCards: PropTypes.func.isRequired
+  updateFilterCards: PropTypes.func.isRequired,
+  updatePaginationCards: PropTypes.func.isRequired
 };
 
 export default Filter;

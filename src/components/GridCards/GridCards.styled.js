@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Grid = styled.div`
+export const Grid = styled.div`
   width: 100%;
   grid-area: ${props => props.gridArea};
   display: grid;
@@ -11,4 +11,9 @@ const Grid = styled.div`
   border: 1px solid #ddd;
 `;
 
-export default Grid;
+export const CardsContainer = styled.div``;
+
+export const CardsPagination = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
