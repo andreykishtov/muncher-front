@@ -3,8 +3,7 @@ import 'antd/lib/pagination/style/css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Pagination } from 'antd';
-import { CardsContainer } from './GridCards.styled';
-import './Grid.css';
+import { CardsContainer, CardsPagination } from './GridCards.styled';
 
 const GridCards = ({ pageSize, filteredCards, paginationSection, pageNum, updatePagination }) => (
   <Card
@@ -17,14 +16,16 @@ const GridCards = ({ pageSize, filteredCards, paginationSection, pageNum, update
     bordered={false}
     noHovering
   >
-    <CardsContainer>{paginationSection}</CardsContainer>
-    <Pagination
-      defaultCurrent={1}
-      current={pageNum}
-      pageSize={pageSize}
-      total={filteredCards.length}
-      onChange={updatePagination}
-    />
+    <CardsPagination>
+      <CardsContainer>{paginationSection}</CardsContainer>
+      <Pagination
+        defaultCurrent={1}
+        current={pageNum}
+        pageSize={pageSize}
+        total={filteredCards.length}
+        onChange={updatePagination}
+      />
+    </CardsPagination>
   </Card>
 );
 

@@ -12,3 +12,8 @@ export const Grid = styled.div`
 `;
 
 export const CardsContainer = styled.div``;
+
+export const CardsPagination = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
