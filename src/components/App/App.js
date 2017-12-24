@@ -32,7 +32,7 @@ const App = () => (
             <Route exact path="/location" component={NotFound} />
             <Route path="/location" component={Location} />
             <Route exact path="/dashboard" component={DashBoardPage} />
-            <Route component={() => <h1>Oops.. page not found</h1>} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </MuiThemeProvider>
