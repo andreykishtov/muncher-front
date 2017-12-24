@@ -10,6 +10,7 @@ import HomePage from '../../pages/HomePage/HomePage';
 import Location from '../../pages/Location/Location';
 import DashBoardPage from '../../containers/DashBoardPage';
 import Header from '../Header/Header';
+import NotFound from '../NotFound/NotFound';
 
 export const global = injectGlobal`
   body {
@@ -28,9 +29,10 @@ const App = () => (
             <Route exact path="/" component={HomePage} />
             <Route path="/login" component={WrappedLoginForm} />
             <Route path="/signup" component={WrappedSignupForm} />
+            <Route exact path="/location" component={NotFound} />
             <Route path="/location" component={Location} />
             <Route exact path="/dashboard" component={DashBoardPage} />
-            <Route component={() => <h1>Oops.. page not found</h1>} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </MuiThemeProvider>
