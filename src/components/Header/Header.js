@@ -1,7 +1,8 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import { Button } from 'antd';
 import { Link } from 'react-router-dom';
-import LoginDialog from '../../containers/Login';
+// import RaisedButton from 'material-ui/RaisedButton';
+// import LoginDialog from '../../containers/Login';
 import logo from '../../assets/images/flat-51-128.png';
 import { HeaderStyle, Title, Nav, NavItem } from './Header.styles';
 
@@ -18,30 +19,25 @@ const Header = () => (
       </NavItem>
     </Nav>
     <Nav>
-      <NavItem>
-        <LoginDialog />
-      </NavItem>
-
-      <NavItem>
-        <Link to="dashboard">
-          <RaisedButton label="Owner Zone" backgroundColor="#a4c639" />
-        </Link>
-      </NavItem>
-
-      <NavItem>
-        <RaisedButton
-          href="https://github.com/Alaev/muncher-front"
-          target="_blank"
-          secondary
-          style={{ fontSize: '30px' }}
-        >
+      <Link to="login">
+        <Button type="default" size="large">
+          login
+        </Button>
+      </Link>
+      <Link to="dashboard">
+        <Button type="default" size="large">
+          owner zone
+        </Button>
+      </Link>
+      <a href="https://github.com/Alaev/muncher-front">
+        <Button type="default" size="large" >
           <i
             className="fa fa-github"
             aria-hidden="true"
-            style={{ color: 'white' }}
-          />
-        </RaisedButton>
-      </NavItem>
+            style={{ color: 'black' }}
+          />   Github
+        </Button>
+      </a>
     </Nav>
   </HeaderStyle>
 );
