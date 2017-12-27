@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import LoginDialog from '../../containers/Login';
 import logo from '../../assets/images/flat-51-128.png';
 import { HeaderStyle, Title, Nav, NavItem } from './Header.styles';
 
