@@ -30,11 +30,7 @@ class HomePage extends Component {
     this.setState({ special });
   };
 
-  onMarkerClick = id => {
-    this.onCardClick(id);
-  };
-
-  onCardClick = (id, borderType = '#EAE8F2') => {
+  onMarkerClick = (id, borderType = '#EAE8F2') => {
     const { dataMarkers } = this.state;
     const myElement = document.getElementById(id);
     const topPos = myElement.parentElement.parentElement.offsetTop;
@@ -76,7 +72,7 @@ class HomePage extends Component {
           {...tile}
           toggleCTADialog={this.toggleCTADialog}
           redirectToLocation={this.redirectToLocation}
-          onCardClick={this.onCardClick}
+          onCardClick={this.onMarkerClick}
         />
       </Card.Grid>
     ));
