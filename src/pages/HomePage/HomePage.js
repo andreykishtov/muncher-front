@@ -32,11 +32,13 @@ class HomePage extends Component {
 
   onMarkerClick = id => {
     this.onCardClick(id);
-    this.scroll(id);
   };
 
   onCardClick = (id, borderType = '#EAE8F2') => {
     const { dataMarkers } = this.state;
+    const myElement = document.getElementById(id);
+    const topPos = myElement.parentElement.parentElement.offsetTop;
+    document.getElementById('cardWrapper').scrollTop = topPos;
     const selectedCard = dataMarkers.map(card =>
       (card.id === id
         ? { ...card, selected: borderType, showInfo: !card.showInfo }
@@ -47,7 +49,6 @@ class HomePage extends Component {
   getRandomCard() {
     return this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
   }
-
 
   updatePagination = (pageNumber, paginationData1, filteredCards1) => {
     let { filteredCards, paginationData, pageNum } = this.state;
@@ -62,7 +63,6 @@ class HomePage extends Component {
     }
     this.setState({ paginationData, paginationSection, dataMarkers, pageNum });
   };
-
 
   updatePaginationCards = filteredCards => {
     const paginationData = filteredCards.map(tile => (
@@ -88,12 +88,6 @@ class HomePage extends Component {
     history.push(`/location/${id}`);
   };
 
-  scroll = cardId => {
-    const myElement = document.getElementById(cardId);
-    const topPos = myElement.parentElement.parentElement.offsetTop;
-    document.getElementById('cardWrapper').scrollTop = topPos;
-  };
-
   applyStyle = id => {
     if (this.state.isSelected === id);
   };
@@ -114,14 +108,7 @@ class HomePage extends Component {
   };
 
   render() {
-    const {
-      special,
-      filteredCards,
-      cards,
-      dataMarkers,
-      pageNum,
-      paginationSection
-    } = this.state;
+    const { special, filteredCards, cards, dataMarkers, pageNum, paginationSection } = this.state;
 
     return (
       <div>
