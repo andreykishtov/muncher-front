@@ -42,19 +42,17 @@ class HomePage extends Component {
     this.setState({ dataMarkers: selectedCard });
   };
 
-  getRandomCard() {
-    return this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
-  }
+  getRandomCard = () => this.state.cards[Math.floor(Math.random() * this.state.cards.length)];
 
-  updatePagination = (pageNumber, paginationData1, filteredCards1) => {
+  updatePagination = (pageNumber, paginationData1, filteredCardsFunc) => {
     let { filteredCards, paginationData, pageNum } = this.state;
     pageNum = pageNumber || pageNum;
+    filteredCards = filteredCardsFunc || filteredCards;
     paginationData = typeof paginationData1 === 'number' ? paginationData : paginationData1;
-    filteredCards = filteredCards1 || filteredCards;
     const startIndex = (pageNum - 1) * itemsPerPage;
     const paginationSection = paginationData.slice(startIndex, startIndex + itemsPerPage);
     const dataMarkers = filteredCards.slice(startIndex, startIndex + itemsPerPage);
-    if (filteredCards1) {
+    if (filteredCardsFunc) {
       pageNum = 1;
     }
     this.setState({ paginationData, paginationSection, dataMarkers, pageNum });
@@ -80,17 +78,11 @@ class HomePage extends Component {
     this.updatePagination(undefined, paginationData, filteredCards);
   };
 
-  redirectToLocation = (history, id) => {
-    history.push(`/location/${id}`);
-  };
+  redirectToLocation = (history, id) => history.push(`/location/${id}`);
 
-  applyStyle = id => {
-    if (this.state.isSelected === id);
-  };
+  applyStyle = id => this.state.isSelected === id;
 
-  updateFilterCards = filteredCards => {
-    this.setState({ filteredCards });
-  };
+  updateFilterCards = filteredCards => this.setState({ filteredCards });
 
   toggleCTADialog = restId => {
     const previousState = this.state.toggleCTADialog;
@@ -107,49 +99,47 @@ class HomePage extends Component {
     const { special, filteredCards, cards, dataMarkers, pageNum, paginationSection } = this.state;
 
     return (
-      <div>
-        <Main>
-          <Search gridArea="search">
-            <Filter
-              cards={cards}
-              updateFilterCards={this.updateFilterCards}
-              updatePaginationCards={this.updatePaginationCards}
-            />
-          </Search>
-          <Right gridArea="right">
-            <GridCards
-              pageSize={itemsPerPage}
-              filteredCards={filteredCards}
-              paginationSection={paginationSection}
-              pageNum={pageNum}
-              updatePagination={this.updatePagination}
-            />
-            <CallToActionDialog
-              selectedRest={this.state.selectedRest}
-              open={this.state.toggleCTADialog}
-              toggleCTADialog={this.toggleCTADialog}
-            />
-          </Right>
-          <Left gridArea="left">
-            <MapWithMarkers
-              onMarkerClick={this.onMarkerClick}
-              dataMarkers={dataMarkers}
-              lat={34}
-              lng={32}
-              defaultZoom={4}
-            />
-          </Left>
-          <BottomLeft gridArea="bottomLeft">
-            <FeaturedCard
-              special={special}
-              cards={dataMarkers}
-              redirectToLocation={this.redirectToLocation}
-              toggleCTADialog={this.toggleCTADialog}
-              onCardClick={this.onMarkerClick}
-            />
-          </BottomLeft>
-        </Main>
-      </div>
+      <Main>
+        <Search gridArea="search">
+          <Filter
+            cards={cards}
+            updateFilterCards={this.updateFilterCards}
+            updatePaginationCards={this.updatePaginationCards}
+          />
+        </Search>
+        <Right gridArea="right">
+          <GridCards
+            pageSize={itemsPerPage}
+            filteredCards={filteredCards}
+            paginationSection={paginationSection}
+            pageNum={pageNum}
+            updatePagination={this.updatePagination}
+          />
+          <CallToActionDialog
+            selectedRest={this.state.selectedRest}
+            open={this.state.toggleCTADialog}
+            toggleCTADialog={this.toggleCTADialog}
+          />
+        </Right>
+        <Left gridArea="left">
+          <MapWithMarkers
+            onMarkerClick={this.onMarkerClick}
+            dataMarkers={dataMarkers}
+            lat={34}
+            lng={32}
+            defaultZoom={4}
+          />
+        </Left>
+        <BottomLeft gridArea="bottomLeft">
+          <FeaturedCard
+            special={special}
+            cards={dataMarkers}
+            redirectToLocation={this.redirectToLocation}
+            toggleCTADialog={this.toggleCTADialog}
+            onCardClick={this.onMarkerClick}
+          />
+        </BottomLeft>
+      </Main>
     );
   }
 }
